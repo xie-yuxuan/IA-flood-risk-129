@@ -10,16 +10,18 @@ from .utils import sorted_by_key  # noqa
 from .stationdata import build_station_list
 from .haversine import haversine
 from .station import MonitoringStation
-#from . import datafetcher
-from floodsystem.datafetcher import fetch, fetch_latest_water_level_data,\
+from .datafetcher import fetch, fetch_latest_water_level_data,\
      fetch_measure_levels, fetch_station_data, dump, load
 
 def station_by_distance(stations, p):
     stations = build_station_list()
     d_list = []
+    lon1, lat1 = p[0],p[1]
     for station in stations:
         names = station.name
-        distance = haversine(p, station.coord)
+        coords = station.coord
+        lon2, lat2 = coords[0], coords[1]
+        distance = haversine(lon1, lat1, lon2, lat2)
         d_tuple = (names, distance)
         d_list.append(d_tuple)
     return d_list
@@ -28,10 +30,14 @@ def station_by_distance(stations, p):
 def station_within_radius(stations, centre, r):
     stations = build_station_list()
     r_list = []
-    r = haversine(centre, station.coord)
+    lon1, lat1 = centre[0],centre[1]
+    #coord = station.coord
+    #r = haversine(centre, station.coord)
     for station in stations:
         names = station.name
-        distance = haversine(centre, station.coord)
+        coords = station.coord
+        lon2, lat2 = coords[0], coords[1]
+        distance = haversine(lon1, lat1, lon2, lat2)
         if distance <= r:
             r_list.append(names)
         else:
@@ -45,7 +51,7 @@ def rivers_with_station(stations):
     for station in stations:
         names = station.name
         rivers = station.river
-        rs_list.append(names)
+        rs_list.append(rivers)
         rs = set (rs_list)
     return rs
 
@@ -68,5 +74,6 @@ def stations_by_river(stations):
                 continue
         nameList.append(name_list)
     sr_dict = dict(zip(riverList, nameList))
+    sr_dict = set(sr_dict)
     return sr_dict
 
