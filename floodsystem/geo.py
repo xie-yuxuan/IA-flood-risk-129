@@ -70,3 +70,37 @@ def stations_by_river(stations):
     sr_dict = dict(zip(riverList, nameList))
     return sr_dict
 
+
+#Task1E
+def rivers_by_station_number(stations, N):
+
+    #dictionary in which key = river, value = station_no
+    rivers_station_no = {}
+
+    #for loop to cycle through all stations, adding a key value pair of river and station no
+    for station in stations:
+        if station.river in rivers_station_no:
+            rivers_station_no[station.river] += 1
+        else:
+            rivers_station_no[station.river] = 1
+
+    #sort the dictionary to give river with descending order of station no
+    rivers_station_no = sorted(rivers_station_no.items(), key=lambda x:x[1], reverse=True)
+
+    #appending top 9 rivers with most number of station
+    river_list = []
+    count = 0
+    for x in range(9):
+        if count <= N:
+            river_list.append(list(rivers_station_no)[x])
+            count += 1
+
+    #cycle through all rivers, adding rivers with station number same as rank 9 river
+    for pair in rivers_station_no:
+        if pair[-1] == river_list[-1][-1]:
+            river_list.append(pair)
+
+    #remove river at index 8 (rank 9) to remove double count
+    river_list.pop(8)
+
+    return river_list
