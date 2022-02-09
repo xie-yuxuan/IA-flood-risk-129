@@ -2,7 +2,7 @@ from floodsystem.stationdata import build_station_list
 from floodsystem.geo import rivers_by_station_number
 
 def run():
-    """Implement a function that determines the N rivers with the greatest number of monitoring stations"""
+    """Requirements for Task 1E"""
 
     #List of stations
     stations = build_station_list()
