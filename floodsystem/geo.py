@@ -24,6 +24,7 @@ def station_by_distance(stations, p):
         distance = haversine(lon1, lat1, lon2, lat2)
         d_tuple = (names, distance)
         d_list.append(d_tuple)
+        d_list = sorted_by_key(d_list, 1)
     return d_list
     
 
@@ -31,8 +32,6 @@ def station_within_radius(stations, centre, r):
     stations = build_station_list()
     r_list = []
     lon1, lat1 = centre[0],centre[1]
-    #coord = station.coord
-    #r = haversine(centre, station.coord)
     for station in stations:
         names = station.name
         coords = station.coord
@@ -49,31 +48,27 @@ def rivers_with_station(stations):
     stations = build_station_list()
     rs_list = []
     for station in stations:
-        names = station.name
         rivers = station.river
         rs_list.append(rivers)
-        rs = set (rs_list)
-    return rs
+    rs_list.sort()
+    river_list = set(rs_list)
+        # if rivers in rs_list:
+        #     continue
+        # else:
+        #     rs_list.append(rivers)
+    return river_list
 
 
 def stations_by_river(stations):
-    stations = build_station_list()
-    sr_list = []
     sr_dict = {}
-    nameList = []
-    riverList = []
     for station in stations:
-        names = station.name
         rivers = station.river
-        riverList.append(rivers)
-        name_list = []
-        for station in stations:
-            if station.river == rivers:
-                name_list.append(station.name)
-            else:
-                continue
-        nameList.append(name_list)
-    sr_dict = dict(zip(riverList, nameList))
-    sr_dict = set(sr_dict)
-    return sr_dict
+        names = station.name
+        if rivers in sr_dict:
+            sr_dict[rivers].append(names)
+            sr_dict[rivers].sort()
+        else:
+            sr_dict[rivers] = [names]
+    return (sr_dict)
+
 
