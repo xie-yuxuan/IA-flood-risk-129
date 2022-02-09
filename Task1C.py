@@ -4,7 +4,7 @@ from floodsystem.haversine import haversine
 from floodsystem.station import MonitoringStation
 
 def run():
-    """Requirements for Task 1A"""
+    """Requirements for Task 1C"""
 
     # Build list of stations
     stations = build_station_list()
