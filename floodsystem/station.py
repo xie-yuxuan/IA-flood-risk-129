@@ -61,7 +61,7 @@ class MonitoringStation:
 
 #Task1F
 def inconsistent_typical_range_stations(stations):
-    """print a list of station names, in alphabetical order, for stations with inconsistent data"""
+    """Requirements for Task 1F"""
 
     #list of stations with inconsistent typical range data
     inconsistent_list = []
