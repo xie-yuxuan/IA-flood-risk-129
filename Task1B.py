@@ -6,7 +6,7 @@ from floodsystem.station import MonitoringStation
 from floodsystem.utils import sorted_by_key  # noqa
 
 def run():
-    """Requirements for Task 1A"""
+    """Requirements for Task 1B"""
 
     # Build list of stations
     stations = build_station_list()
